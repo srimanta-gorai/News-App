@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.news_app.data.model.NewsModel
 import io.ktor.client.call.body
 import io.ktor.client.request.get
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -17,7 +18,11 @@ class NewsViewModel: ViewModel() {
     val state = _state.asStateFlow()
 
     init {
-        getNews()
+        viewModelScope.launch {
+            delay(5_000)
+            getNews()
+        }
+
     }
 
     fun getNews(){
