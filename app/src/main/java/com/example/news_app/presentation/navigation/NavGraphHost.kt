@@ -10,6 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.news_app.presentation.NewsRootScreen.NewsRootScreen
 
 @Composable
 fun NavGraphHost (navController: NavHostController){
@@ -17,6 +18,10 @@ fun NavGraphHost (navController: NavHostController){
 
 
     NavHost(navController, NavigationRoutes.AllNews){
+
+        composable <NavigationRoutes.RootScreen>{
+            NewsRootScreen(navController)
+        }
 
         composable<NavigationRoutes.AllNews> {
             Column(
