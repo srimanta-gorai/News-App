@@ -24,7 +24,7 @@ class NewsViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 val data =
-                    ktor.get("https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=cccf54d319934db2bb8b035838d21711")
+                    ktor.get("https://newsapi.org/v2/top-headlines?country=us&apiKey=cccf54d319934db2bb8b035838d21711")
                         .body<NewsModel>()
                 _state.update {
                     it.copy(
