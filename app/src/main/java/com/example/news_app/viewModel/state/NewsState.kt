@@ -1,4 +1,4 @@
-package com.example.news_app.ui
+package com.example.news_app.viewModel.state
 
 import com.example.news_app.data.model.Article
 import kotlinx.serialization.Serializable

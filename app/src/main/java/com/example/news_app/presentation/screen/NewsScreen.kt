@@ -9,18 +9,30 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
 import com.example.news_app.presentation.screen.component.CategoriesBar
-import com.example.news_app.ui.NewsViewModel
+import com.example.news_app.viewModel.NewsViewModel
 import com.example.news_app.presentation.screen.component.NewsItem
 
+
 @Composable
-fun NewsScreen(viewModel: NewsViewModel) {
+fun NewsScreen(
+    viewModel: NewsViewModel,
+    category: String,
+    navController: NavHostController
+
+) {
 
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(category) {
+        viewModel.getNews(category)
+    }
 
     when {
         state.isLoading -> {
@@ -37,7 +49,7 @@ fun NewsScreen(viewModel: NewsViewModel) {
         else ->{
             Column(modifier = Modifier.fillMaxSize()) {
 
-                CategoriesBar(newsViewModel = viewModel)
+                CategoriesBar(navController)
 
                 LazyColumn(modifier = Modifier.fillMaxSize()){
                     items(state.news) {artical ->

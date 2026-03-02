@@ -18,9 +18,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.news_app.presentation.screen.NewsScreen
-import com.example.news_app.presentation.screen.component.CategoriesBar
-import com.example.news_app.ui.NewsViewModel
+import com.example.news_app.presentation.screen.MainScreen
+import com.example.news_app.viewModel.NewsViewModel
 import com.example.news_app.ui.theme.NewsAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -41,7 +40,7 @@ class MainActivity : ComponentActivity() {
                             fontFamily = FontFamily.Serif
                         )
                         Spacer(modifier = Modifier.height(10.dp))
-                        NewsScreen(vm)
+                        MainScreen(vm)
                     }
 
                 }

@@ -1,5 +1,7 @@
 package com.example.news_app.presentation.screen.component
 
+import android.service.controls.Control
+import android.widget.MediaController
 import androidx.compose.foundation.horizontalScroll
 
 import androidx.compose.foundation.layout.Row
@@ -12,19 +14,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.news_app.ui.NewsViewModel
+import androidx.navigation.NavHostController
+import com.example.news_app.presentation.navigation.NavigationRoutes
+import com.example.news_app.viewModel.NewsViewModel
 
 @Composable
-fun CategoriesBar(newsViewModel: NewsViewModel) {
+fun CategoriesBar(navController: NavHostController) {
 
     val categoryList = listOf(
         "GENERAL",
-        "BUSINESS",
+        "INDIA",
         "ENTERTAINMENT",
-        "TECHNOLOGY",
-        "HEALTH",
-        "SCIENCE",
-        "SPORTS"
+        "TECHNOLOGY"
     )
 
     Row(
@@ -35,6 +36,13 @@ fun CategoriesBar(newsViewModel: NewsViewModel) {
     ) {
         categoryList.forEach { category->
             Button(onClick = {
+                when (category) {
+
+                    "GENERAL" -> navController.navigate(NavigationRoutes.Home)
+                    "INDIA" -> navController.navigate(NavigationRoutes.India)
+                    "TECHNOLOGY" -> navController.navigate(NavigationRoutes.Technology)
+                    "ENTERTAINMENT" -> navController.navigate(NavigationRoutes.Entertainment)
+                }
             } ,
                 modifier = Modifier.padding(5.dp)) {
                 Text(text = category)

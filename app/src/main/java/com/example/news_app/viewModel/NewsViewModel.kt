@@ -1,8 +1,10 @@
-package com.example.news_app.ui
+package com.example.news_app.viewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.news_app.data.model.NewsModel
+import com.example.news_app.viewModel.state.NewsState
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,22 +19,33 @@ class NewsViewModel: ViewModel() {
     val state = _state.asStateFlow()
 
     init {
-        getNews()
+
+        getNews("general")
     }
 
-    fun getNews(){
+    fun getNews(category : String){
+
+        val api = "https://newsapi.org/v2/top-headlines?country=us&category=$category&apiKey=cccf54d319934db2bb8b035838d21711"
         viewModelScope.launch {
+            _state.update {
+                it.copy(isLoading = true,
+                    news = emptyList()
+                )
+            }
             try {
                 val data =
-                    ktor.get("https://newsapi.org/v2/top-headlines?country=us&apiKey=cccf54d319934db2bb8b035838d21711")
+                    ktor.get(api)
                         .body<NewsModel>()
+//                Log.d("Srimanta", "getNews:$data ")
                 _state.update {
                     it.copy(
-                        news = data.articles
+                        news = data.articles,
+                        isLoading = false
                     )
                 }
             }catch (e: Exception) {
-                _state.value = NewsState(error = e.message)
+                _state.value = NewsState(error = e.message,
+                    isLoading = false)
             }
         }
     }
